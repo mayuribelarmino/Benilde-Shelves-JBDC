@@ -14,7 +14,7 @@ public interface LendDao {
 
 	public Lend find(Integer lendID);
 	
-	public List<Lend1> findByName(String borrowerName);
+	public List<Lend1> findByName(String borrowerName, String bookID);
 
 	public void add(Lend lend);
 

@@ -36,8 +36,8 @@ public class LendServiceImpl implements LendService {
 	}
 
 	@Override
-	public List<Lend1> findByName(String borrowerName) {
-		return lendDao.findByName(borrowerName);
+	public List<Lend1> findByName(String borrowerName, String bookID) {
+		return lendDao.findByName(borrowerName, bookID);
 	}
 
 	@Override

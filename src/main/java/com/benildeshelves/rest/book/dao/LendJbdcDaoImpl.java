@@ -69,6 +69,8 @@ private String createSearchValue(String string) {
 		
 		return value;
 	}
+
+
 	
 	private void createLendTable() {
 		String createSql = "CREATE TABLE LEND " 
@@ -99,9 +101,9 @@ private String createSearchValue(String string) {
 		java.sql.Date d = java.sql.Date.valueOf("2019-04-27");
 	
 
-		add(new Lend(1, "Mayuri Belarmino",a, d, c, "Not Returned"));
+		add(new Lend("1", "Mayuri Belarmino",a, d, c, "Returned"));
 		
-		add(new Lend(2, "Leerick Bautista",a, b, c, "Not Returned"));
+		add(new Lend("2", "Leerick Bautista",a, b, c, "Returned"));
 	
 		}
 
@@ -109,7 +111,7 @@ private String createSearchValue(String string) {
 	@Override
 	public List<Lend1> findAll() {
 
-		return findByName(null);
+		return findByName(null, null);
 	}
 
 	@Override
@@ -125,7 +127,7 @@ private String createSearchValue(String string) {
 				ResultSet results = ps.executeQuery();
 
 				if (results.next()) {
-					lend = new Lend(results.getInt("lendID"),results.getInt("bookID"), results.getString("borrowerName"),
+					lend = new Lend(results.getInt("lendID"),results.getString("bookID"), results.getString("borrowerName"),
 							results.getDate("dateBorrowed"),
 							results.getDate("dateDue"),results.getDate("dateReturned"), results.getString("lendStatus"));
 				}
@@ -140,20 +142,21 @@ private String createSearchValue(String string) {
 	}
 
 	@Override
-	public List<Lend1> findByName(String borrowerName) {
+	public List<Lend1> findByName(String borrowerName, String bookID) {
 		List<Lend1> lends1 = new ArrayList<>();
 
 		String sql = "SELECT LEND.lendID, LEND.bookID, LEND.borrowerName, LEND.dateBorrowed, LEND.dateDue, LEND.dateReturned, LEND.lendStatus, BOOK.Title FROM LEND INNER JOIN BOOK ON LEND.bookID=BOOK.bookID"
-				+ " WHERE borrowername LIKE?";
+				+ " WHERE borrowername LIKE? AND bookID LIKE ?";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
 			ps.setString(1, createSearchValue(borrowerName));
+			ps.setString(2, createSearchValue(bookID));
 
 			ResultSet results = ps.executeQuery();
 
 			while (results.next()) {
-				Lend1 lend1  = new Lend1(results.getInt("lendID"),results.getInt("bookID"), results.getString("borrowerName"),
+				Lend1 lend1  = new Lend1(results.getInt("lendID"),results.getString("bookID"), results.getString("borrowerName"),
 						results.getDate("dateBorrowed"),
 						results.getDate("dateDue"),results.getDate("dateReturned"),results.getString("lendStatus"), results.getString("Title"));
 				lends1.add(lend1);
@@ -176,7 +179,7 @@ private String createSearchValue(String string) {
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(insertSql)) {
 
-			ps.setInt(1, lend.getbookID());
+			ps.setString(1, lend.getbookID());
 			ps.setString(2, lend.getborrowerName());
 			ps.setDate(3,lend.getdateBorrowed());
 			ps.setDate(4, lend.getdateDue());
@@ -206,7 +209,7 @@ private String createSearchValue(String string) {
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
 
-			ps.setInt(1, lend.getbookID());
+			ps.setString(1, lend.getbookID());
 			ps.setString(2, lend.getborrowerName());
 			ps.setDate(3, lend.getdateBorrowed());
 			ps.setDate(4, lend.getdateDue());

@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Lend {
 	
 	Integer lendID;
-	int bookID;
+	private String bookID;
 	private String borrowerName;
 	private Date dateBorrowed;
 	private Date dateDue;
@@ -16,14 +16,14 @@ public class Lend {
 		
 	}
 	
-	public Lend(int bookID, String borrowerName, Date dateBorrowed,Date dateDue, Date dateReturned, String lendStatus)
+	public Lend(String bookID, String borrowerName, Date dateBorrowed,Date dateDue, Date dateReturned, String lendStatus)
 	{
 		this(null,bookID, borrowerName,   dateBorrowed, dateDue, dateReturned, lendStatus);
 	}
 
 	
 	
-	public Lend(Integer lendID, int bookID, String borrowerName, Date dateBorrowed, Date dateDue, Date dateReturned, String lendStatus) {
+	public Lend(Integer lendID, String bookID, String borrowerName, Date dateBorrowed, Date dateDue, Date dateReturned, String lendStatus) {
 		this.lendID=lendID;
 		this.bookID = bookID;
 		this.borrowerName = borrowerName;
@@ -40,11 +40,11 @@ public class Lend {
 	public void setlendID(Integer lendID) {
 		this.lendID = lendID;
 	}
-	public int getbookID() {
+	public String getbookID() {
 		return bookID;
 	}
 
-	public void setbookID(int bookID) {
+	public void setbookID(String bookID) {
 		this.bookID = bookID;
 	}
 

@@ -43,6 +43,7 @@ public class LendController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Lend1> getLend(
 			@QueryParam("lendID") Integer lendID, 
+			@QueryParam("bookID") String bookID, 
 			@QueryParam("borrowerName") String borrowerName,
 			@QueryParam("dateBorrowed") Date dateBorrowed, 
 			@QueryParam("dateDue") Date dateDue,
@@ -52,14 +53,14 @@ public class LendController {
 			@QueryParam("borrowerName") String borowerName)
 	
 			 {
-
+		System.out.println("enter");
 		try {
 			List<Lend1> lends1;
 			
-			if (StringUtils.isAllBlank(borrowerName)) {
+			if (StringUtils.isAllBlank(borrowerName, bookID)) {
 				lends1 = lendService.findAll();
 			} else {
-				lends1 = lendService.findByName(borrowerName);
+				lends1 = lendService.findByName(borrowerName, bookID);
 			}
 						
 			return lends1;
@@ -72,12 +73,12 @@ public class LendController {
 
 	
 	@GET
-	@Path("{lendID}")
+	@Path("{bookID}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Lend getLend(@PathParam("lendID") String lendID) {
+	public Lend getLend(@PathParam("bookID") String bookID) {
 
 		try {
-			int IntId1 = Integer.parseInt(lendID);
+			int IntId1 = Integer.parseInt(bookID);
 			Lend lend = lendService.find(IntId1);
 			return lend;
 		} catch (Exception e) {
