@@ -64,6 +64,10 @@ public class BooksController {
 				
 				System.out.println(books.get(i).getbookID());
 			}
+			
+			for (Book book : books) {
+				System.out.println(book.getbookID());
+			}
 						
 			return books;
 			

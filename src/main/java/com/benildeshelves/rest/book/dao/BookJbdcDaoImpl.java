@@ -89,7 +89,7 @@ public class BookJbdcDaoImpl implements BookDao {
 		
 			add(new Book("Bakit Hindi Ka Crush ng Crush Mo?","Ramon Bautista","2781781102459", "Comedy",c,b,"Available"));
 		
-			add(new Book("The Notebook","Nicholas Sparks","9581781102459", "Romance",d,b,"Available"));
+			
 		
 			add(new Book("Noli Me Tangere","Jose Rizal","9761781102459", "Horror",e,b,"Available"));
 		
